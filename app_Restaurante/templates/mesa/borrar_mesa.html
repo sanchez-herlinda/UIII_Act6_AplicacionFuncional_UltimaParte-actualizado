@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Borrar Mesa{% endblock %}
+{% block content %}
+<div class="card p-4 shadow-sm border-0 text-center">
+  <h3 class="text-danger">⚠️ ¿Eliminar esta mesa?</h3>
+  <p>Mesa #<strong>{{ mesa.id }}</strong></p>
+  <p>Capacidad: <strong>{{ mesa.capacidad }}</strong> personas</p>
+  <p>Estado actual: <strong>{{ mesa.estado }}</strong></p>
+  <p>Descripción: <strong>{{ mesa.descripcion|default:"Sin descripción" }}</strong></p>
+
+  <form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Sí, eliminar</button>
+    <a href="{% url 'ver_mesas' %}" class="btn btn-secondary">No, cancelar</a>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Editar Cliente{% endblock %}
+{% block content %}
+<h2 class="mb-4">✏️ Editar Cliente #{{ cliente.id }}</h2>
+
+<form method="POST" class="card p-4 shadow-sm border-0">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Nombre</label>
+      <input type="text" name="nombre" value="{{ cliente.nombre }}" class="form-control" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Apellido</label>
+      <input type="text" name="apellido" value="{{ cliente.apellido }}" class="form-control" required>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Correo electrónico</label>
+    <input type="email" name="email" value="{{ cliente.email }}" class="form-control" required>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Teléfono</label>
+      <input type="text" name="telefono" value="{{ cliente.telefono }}" class="form-control" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Fecha de nacimiento</label>
+      <input type="date" name="fecha_nacimiento" value="{{ cliente.fecha_nacimiento }}" class="form-control">
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Dirección</label>
+    <input type="text" name="direccion_casa" value="{{ cliente.direccion_casa }}" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Alergias</label>
+    <textarea name="alergias" class="form-control">{{ cliente.alergias }}</textarea>
+  </div>
+  <button type="submit" class="btn btn-warning">Actualizar</button>
+  <a href="{% url 'ver_clientes' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

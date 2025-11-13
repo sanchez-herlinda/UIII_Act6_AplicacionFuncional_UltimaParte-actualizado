@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Mesas | Restaurante{% endblock %}
+{% block content %}
+<h2 class="mb-4">🍽️ Lista de Mesas</h2>
+
+<a href="{% url 'agregar_mesa' %}" class="btn btn-success mb-3">+ Agregar Mesa</a>
+
+<table class="table table-hover align-middle">
+  <thead class="table-dark">
+    <tr>
+      <th>ID</th>
+      <th>Dimensiones</th>
+      <th>Capacidad</th>
+      <th>Número de Personas</th>
+      <th>Estado</th>
+      <th>Descripción</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for mesa in mesas %}
+    <tr>
+      <td>{{ mesa.id }}</td>
+      <td>{{ mesa.dimensiones }}</td>
+      <td>{{ mesa.capacidad }}</td>
+      <td>{{ mesa.numpersonas }}</td>
+      <td>
+        {% if mesa.estado == "Disponible" %}
+          <span class="badge bg-success">{{ mesa.estado }}</span>
+        {% elif mesa.estado == "Ocupada" %}
+          <span class="badge bg-danger">{{ mesa.estado }}</span>
+        {% else %}
+          <span class="badge bg-secondary">{{ mesa.estado }}</span>
+        {% endif %}
+      </td>
+      <td>{{ mesa.descripcion|default:"—" }}</td>
+      <td>
+        <a href="{% url 'actualizar_mesa' mesa.id %}" class="btn btn-sm btn-warning">Editar</a>
+        <a href="{% url 'borrar_mesa' mesa.id %}" class="btn btn-sm btn-danger">Borrar</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr>
+      <td colspan="7" class="text-center text-muted">No hay mesas registradas.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

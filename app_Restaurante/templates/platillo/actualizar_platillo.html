@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Editar Platillo{% endblock %}
+{% block content %}
+<h2 class="mb-4">✏️ Editar Platillo #{{ platillo.id }}</h2>
+
+<form method="POST" class="card p-4 shadow-sm border-0">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Nombre</label>
+    <input type="text" name="nombre" class="form-control" value="{{ platillo.nombre }}" required>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Descripción</label>
+    <textarea name="descripcion" class="form-control">{{ platillo.descripcion }}</textarea>
+  </div>
+  <div class="row">
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Precio</label>
+      <input type="number" name="precio" value="{{ platillo.precio }}" step="0.01" class="form-control" required>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label class="form-label">Categoría</label>
+      <input type="text" name="categoria" value="{{ platillo.categoria }}" class="form-control" required>
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Ingredientes</label>
+    <textarea name="ingredientes" class="form-control">{{ platillo.ingredientes }}</textarea>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Tiempo de preparación (min)</label>
+    <input type="number" name="tiempo_preparacion" value="{{ platillo.tiempo_preparacion }}" class="form-control" required>
+  </div>
+  <div class="form-check mb-3">
+    <input class="form-check-input" type="checkbox" name="disponibilidad" {% if platillo.disponibilidad %}checked{% endif %}>
+    <label class="form-check-label">Disponible</label>
+  </div>
+  <button type="submit" class="btn btn-warning">Actualizar</button>
+  <a href="{% url 'ver_platillos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

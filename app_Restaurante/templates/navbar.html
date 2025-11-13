@@ -1,0 +1,52 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand fw-bold" href="{% url 'inicio' %}">
+      🍽️ Restaurante
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <!-- Sección de navegación -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.path == '/' %}active{% endif %}" href="{% url 'inicio' %}">
+            Inicio
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'platillo' in request.path %}active{% endif %}" href="{% url 'ver_platillos' %}">
+            Platillos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'cliente' in request.path %}active{% endif %}" href="{% url 'ver_clientes' %}">
+            Clientes
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'pedido' in request.path %}active{% endif %}" href="{% url 'ver_pedidos' %}">
+            Pedidos
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'mesa' in request.path %}active{% endif %}" href="{% url 'ver_mesas' %}">
+            Mesas
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link {% if 'empleado' in request.path %}active{% endif %}" href="{% url 'ver_empleados' %}">
+            Empleados
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Agregar Pedido{% endblock %}
+{% block content %}
+<h2 class="mb-4">➕ Agregar Pedido</h2>
+<form method="POST" class="card p-4 shadow-sm border-0">
+  {% csrf_token %}
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Cliente</label>
+      <select name="cliente" class="form-select" required>
+        <option value="">-- Selecciona un cliente --</option>
+        {% for c in clientes %}
+          <option value="{{ c.id }}">{{ c.nombre }} {{ c.apellido }}</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Platillo</label>
+      <select name="platillo" class="form-select" required>
+        {% for p in platillos %}
+          <option value="{{ p.id }}">{{ p.nombre }} (${{ p.precio }})</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Mesa</label>
+      <select name="mesa" class="form-select" required>
+        {% for m in mesas %}
+          <option value="{{ m.id }}">Mesa #{{ m.id }} ({{ m.estado }})</option>
+        {% endfor %}
+      </select>
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Empleado</label>
+      <select name="empleado" class="form-select" required>
+        {% for e in empleados %}
+          <option value="{{ e.id }}">{{ e.nombre }} {{ e.apellido }} ({{ e.puesto }})</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Cantidad</label>
+    <input type="number" name="cantidad" min="1" value="1" class="form-control">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Estado</label>
+    <input type="text" name="estado" class="form-control" value="Pendiente">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Notas</label>
+    <textarea name="notas" class="form-control"></textarea>
+  </div>
+  <button class="btn btn-primary">Guardar</button>
+  <a href="{% url 'ver_pedidos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

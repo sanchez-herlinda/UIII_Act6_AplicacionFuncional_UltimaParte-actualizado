@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Inicio | Restaurante{% endblock %}
+
+{% block content %}
+<div class="text-center mb-4">
+  <h1 class="fw-bold">Bienvenido al Sistema del Restaurante 🍽️</h1>
+  <p class="lead text-muted">Gestión integral de platillos, clientes, pedidos, mesas y empleados</p>
+</div>
+
+<!-- ====== TARJETAS RESUMEN ====== -->
+<div class="row text-center justify-content-center g-3">
+  <div class="col-md-2">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h6>🍲 Platillos</h6>
+        <p class="h4 fw-bold text-success">{{ total_platillos }}</p>
+        <a href="{% url 'ver_platillos' %}" class="btn btn-sm btn-outline-success w-100">Ver</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h6>👤 Clientes</h6>
+        <p class="h4 fw-bold text-primary">{{ total_clientes }}</p>
+        <a href="{% url 'ver_clientes' %}" class="btn btn-sm btn-outline-primary w-100">Ver</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h6>📦 Pedidos</h6>
+        <p class="h4 fw-bold text-warning">{{ total_pedidos }}</p>
+        <a href="{% url 'ver_pedidos' %}" class="btn btn-sm btn-outline-warning w-100">Ver</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h6>🍽️ Mesas</h6>
+        <p class="h4 fw-bold text-info">{{ total_mesas }}</p>
+        <a href="{% url 'ver_mesas' %}" class="btn btn-sm btn-outline-info w-100">Ver</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-2">
+    <div class="card shadow-sm border-0 h-100">
+      <div class="card-body">
+        <h6>🧑‍🍳 Empleados</h6>
+        <p class="h4 fw-bold text-danger">{{ total_empleados }}</p>
+        <a href="{% url 'ver_empleados' %}" class="btn btn-sm btn-outline-danger w-100">Ver</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ====== LISTAS RECIENTES ====== -->
+<div class="row mt-5 justify-content-center g-3">
+
+  <!-- Últimos Platillos -->
+  <div class="col-md-2">
+    <h6 class="text-success text-center">Últimos Platillos</h6>
+    <ul class="list-group small">
+      {% for p in platillos %}
+        <li class="list-group-item text-center">
+          <strong>{{ p.nombre }}</strong><br>
+          <small class="text-muted">{{ p.categoria }}</small><br>
+          <small class="text-muted">${{ p.precio }}</small><br>
+          <small class="text-muted">Estado: {{ p.disponibilidad|yesno:"Disponible,No disponible" }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted text-center">No hay platillos</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Últimos Clientes -->
+  <div class="col-md-2">
+    <h6 class="text-primary text-center">Últimos Clientes</h6>
+    <ul class="list-group small">
+      {% for c in clientes %}
+        <li class="list-group-item text-center">
+          <strong>{{ c.nombre }} {{ c.apellido }}</strong><br>
+          <small class="text-muted">{{ c.email }}</small><br>
+          <small class="text-muted">{{ c.telefono }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted text-center">No hay clientes</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Últimos Pedidos -->
+  <div class="col-md-2">
+    <h6 class="text-warning text-center">Últimos Pedidos</h6>
+    <ul class="list-group small">
+      {% for o in pedidos %}
+        <li class="list-group-item text-center">
+          <strong>#{{ o.id }}</strong><br>
+          <small>{{ o.cliente }}</small><br>
+          <small class="text-muted">{{ o.platillo.nombre }} x{{ o.cantidad }}</small><br>
+          <small class="text-muted">{{ o.fechahora|date:"d/m/Y H:i" }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted text-center">No hay pedidos</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Últimas Mesas -->
+  <div class="col-md-2">
+    <h6 class="text-info text-center">Últimas Mesas</h6>
+    <ul class="list-group small">
+      {% for m in mesas %}
+        <li class="list-group-item text-center">
+          <strong>Mesa #{{ m.id }}</strong><br>
+          <small class="text-muted">Capacidad: {{ m.capacidad }}</small><br>
+          <small class="text-muted">Estado: {{ m.estado }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted text-center">No hay mesas</li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <!-- Últimos Empleados -->
+  <div class="col-md-2">
+    <h6 class="text-danger text-center">Últimos Empleados</h6>
+    <ul class="list-group small">
+      {% for e in empleados %}
+        <li class="list-group-item text-center">
+          <strong>{{ e.nombre }} {{ e.apellido }}</strong><br>
+          <small class="text-muted">{{ e.puesto }}</small><br>
+          <small class="text-muted">{{ e.correo }}</small><br>
+          <small class="text-muted">{{ e.telefono }}</small>
+        </li>
+      {% empty %}
+        <li class="list-group-item text-muted text-center">No hay empleados</li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<!-- ====== IMAGEN FINAL ====== -->
+<div class="text-center mt-5">
+  <img src="https://foodandpleasure.com/wp-content/uploads/2018/06/piantao-3.jpg"
+       alt="Restaurante" class="img-fluid rounded shadow" style="max-height:400px; object-fit:cover;">
+</div>
+{% endblock %}

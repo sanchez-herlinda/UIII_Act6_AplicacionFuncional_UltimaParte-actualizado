@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Editar Mesa{% endblock %}
+{% block content %}
+<h2 class="mb-4">✏️ Editar Mesa #{{ mesa.id }}</h2>
+<form method="POST" class="card p-4 shadow-sm border-0">
+  {% csrf_token %}
+  <div class="row mb-3">
+    <div class="col-md-6">
+      <label class="form-label">Dimensiones</label>
+      <input type="text" name="dimensiones" class="form-control" value="{{ mesa.dimensiones }}">
+    </div>
+    <div class="col-md-6">
+      <label class="form-label">Número de Personas</label>
+      <input type="number" name="numpersonas" class="form-control" value="{{ mesa.numpersonas }}">
+    </div>
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Estado</label>
+    <input type="text" name="estado" class="form-control" value="{{ mesa.estado }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Capacidad</label>
+    <input type="number" name="capacidad" class="form-control" value="{{ mesa.capacidad }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Descripción</label>
+    <textarea name="descripcion" class="form-control">{{ mesa.descripcion }}</textarea>
+  </div>
+  <button class="btn btn-warning">Actualizar</button>
+  <a href="{% url 'ver_mesas' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}

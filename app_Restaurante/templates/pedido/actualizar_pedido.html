@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block title %}Actualizar Pedido{% endblock %}
+{% block content %}
+<h2 class="mb-4">✏️ Editar Pedido #{{ pedido.id }}</h2>
+
+<form method="POST" action="{% url 'realizar_actualizacion_pedido' pedido.id %}" class="card p-4 shadow-sm border-0">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label class="form-label">Cliente</label>
+    <select name="cliente" class="form-select" required>
+      {% for c in clientes %}
+        <option value="{{ c.id }}" {% if pedido.cliente.id == c.id %}selected{% endif %}>{{ c.nombre }} {{ c.apellido }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Platillo</label>
+    <select name="platillo" class="form-select" required>
+      {% for p in platillos %}
+        <option value="{{ p.id }}" {% if pedido.platillo.id == p.id %}selected{% endif %}>{{ p.nombre }} — ${{ p.precio }}</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4 mb-3">
+      <label class="form-label">Cantidad</label>
+      <input type="number" name="cantidad" class="form-control" value="{{ pedido.cantidad }}" min="1" required>
+    </div>
+
+    <div class="col-md-8 mb-3">
+      <label class="form-label">Estado</label>
+      <input type="text" name="estado" class="form-control" value="{{ pedido.estado }}">
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Notas</label>
+    <textarea name="notas" class="form-control">{{ pedido.notas }}</textarea>
+  </div>
+
+  <button type="submit" class="btn btn-warning">Actualizar Pedido</button>
+  <a href="{% url 'ver_pedidos' %}" class="btn btn-secondary">Cancelar</a>
+</form>
+{% endblock %}
